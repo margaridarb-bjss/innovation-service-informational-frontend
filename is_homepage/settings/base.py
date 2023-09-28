@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     "is_homepage.apps.search",
     "is_homepage.apps.help_resources",
 
-    'compressor',
+    'compressor',    
+    "wagtail_localize",
+    "wagtail_localize.locales",
     'wagtailnhsukfrontend',
     'wagtailnhsukfrontend.forms',
     'wagtailmetadata',
@@ -80,6 +82,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "is_homepage.urls"
@@ -154,7 +157,15 @@ USE_I18N = True
 
 USE_L10N = True
 
+# Add this
+WAGTAIL_I18N_ENABLED = True
+
 USE_TZ = True
+
+WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
+    ("en", "English"),
+    ("fr", "French"),
+]
 
 
 # Static files (CSS, JavaScript, Images)
