@@ -1,5 +1,6 @@
 {% extends "theme/base.html" %}
 {% load static wagtailcore_tags wagtailimages_tags base_tags %}
+{% load i18n %}
 
 {% block extra_css %}
   <style>
@@ -58,7 +59,7 @@
   {% if section_bgcolor == 'white' %}<div class="bg-color-white">{% endif %}
   <div class="nhsuk-width-container app-width-container nhsuk-u-padding-top-7">
  
-    <h2>Case studies</h2>
+    <h2>{% translate "Case studies" %}</h2>
  
     <ul class="nhsuk-grid-row nhsuk-card-group">
  
@@ -116,7 +117,7 @@
   {% if section_bgcolor == 'white' %}<div class="bg-color-white">{% endif %}
   <div class="nhsuk-width-container app-width-container nhsuk-u-padding-top-7 nhsuk-u-padding-bottom-1">
 
-    <h2>News</h2>
+    <h2>{% translate "News" %}</h2>
 
     <ul class="nhsuk-grid-row nhsuk-card-group nhsuk-u-margin-bottom-0 news-grid">
       {% for item in news_list %}
