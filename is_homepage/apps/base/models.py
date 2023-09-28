@@ -1,11 +1,12 @@
 from django.core.exceptions import ValidationError
 
 from wagtail.admin.panels import FieldPanel
-from wagtail.models import Page
+from wagtail.models import Page, TranslatableMixin
 from wagtailmetadata.models import MetadataPageMixin
+from wagtail_localize.fields import SynchronizedField
 
 
-class BasePage(MetadataPageMixin, Page):
+class BasePage(MetadataPageMixin, Page, TranslatableMixin):
 
     # Editor panels configuration.
     promote_panels = [
@@ -14,6 +15,10 @@ class BasePage(MetadataPageMixin, Page):
         # FieldPanel('show_in_menus'),
         FieldPanel('search_description'),
         FieldPanel('search_image')
+    ]
+
+    override_translatable_fields = [
+        SynchronizedField("slug", overridable=False),
     ]
 
     def full_clean(self, *args, **kwargs):
