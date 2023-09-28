@@ -5,12 +5,12 @@ from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
-from wagtail.models import Orderable
+from wagtail.models import Orderable, TranslatableMixin
 from wagtail.snippets.models import register_snippet
 
 
 @register_snippet
-class BaseNavigationSnippet(ClusterableModel):
+class BaseNavigationSnippet(TranslatableMixin, ClusterableModel):
 
     title = models.CharField(max_length=100)
     slug = AutoSlugField(verbose_name='Menu identifier', populate_from='title', editable=True, help_text='Unique identifier of the menu.')
@@ -26,10 +26,11 @@ class BaseNavigationSnippet(ClusterableModel):
     def __str__(self):
         return self.title
 
-    class Meta:
+    class Meta(TranslatableMixin.Meta):
         verbose_name = 'Navigation'
         verbose_name_plural = 'Navigation'
         ordering = ['title']
+        unique_together = [('translation_key', 'locale')]
 
 
 class NavigationMenuItem(Orderable):
