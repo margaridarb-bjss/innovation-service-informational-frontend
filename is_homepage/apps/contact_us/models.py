@@ -11,7 +11,7 @@ from wagtail.contrib.forms.models import AbstractForm, AbstractFormField, Wagtai
 from wagtailnhsukfrontend.blocks import ActionLinkBlock, InsetTextBlock, RichTextBlock
 
 from is_homepage.config.helpers.notifications_helper import send_contact_email
-
+from wagtail.models import TranslatableMixin
 
 form_constants = {
     # Needed constants relative to mandatory fields that must exist in order to send to different email recipients.
@@ -23,8 +23,14 @@ form_constants = {
 }
 
 
-class FormField(AbstractFormField):
+class FormField(TranslatableMixin, AbstractFormField):
     page = ParentalKey('ContactUsPage', on_delete=models.CASCADE, related_name='form_fields')
+
+    # it was giving a warning about the default value
+    locale = models.ForeignKey(editable=False, on_delete=models.deletion.PROTECT, related_name='+', to='wagtailcore.locale', default=1)
+    
+    class Meta(TranslatableMixin.Meta):
+        unique_together = [('translation_key', 'locale')]
 
 
 class ContactUsAdminPage(WagtailAdminFormPageForm):
@@ -104,6 +110,7 @@ class ContactUsPage(AbstractForm):
             ])
         ], heading='Email recipients')
     ]
+
 
     promote_panels = [
         FieldPanel('slug'),
