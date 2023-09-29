@@ -1,6 +1,6 @@
 {% extends "theme/base.html" %}
 {% load static wagtailcore_tags wagtailimages_tags base_tags %}
-{% load i18n %}
+{% load i18n wagtailimages_tags %}
 
 {% block extra_css %}
   <style>
@@ -59,7 +59,7 @@
   {% if section_bgcolor == 'white' %}<div class="bg-color-white">{% endif %}
   <div class="nhsuk-width-container app-width-container nhsuk-u-padding-top-7">
  
-    <h2>{% translate "Case studies" %}</h2>
+    <h2>{% translate 'Case studies' %}</h2>
  
     <ul class="nhsuk-grid-row nhsuk-card-group">
  
@@ -105,7 +105,7 @@
           <path d="M0 0h24v24H0z" fill="none" />
           <path d="M12 2a10 10 0 0 0-9.95 9h11.64L9.74 7.05a1 1 0 0 1 1.41-1.41l5.66 5.65a1 1 0 0 1 0 1.42l-5.66 5.65a1 1 0 0 1-1.41 0 1 1 0 0 1 0-1.41L13.69 13H2.05A10 10 0 1 0 12 2z" />
         </svg>
-        <span class="nhsuk-action-link__text">Read all case studies</span>
+        <span class="nhsuk-action-link__text">{% translate 'Read all case studies' %}</span>
       </a>
     </div>
  
@@ -117,7 +117,7 @@
   {% if section_bgcolor == 'white' %}<div class="bg-color-white">{% endif %}
   <div class="nhsuk-width-container app-width-container nhsuk-u-padding-top-7 nhsuk-u-padding-bottom-1">
 
-    <h2>{% translate "News" %}</h2>
+    <h2>{% translate 'News' %}</h2>
 
     <ul class="nhsuk-grid-row nhsuk-card-group nhsuk-u-margin-bottom-0 news-grid">
       {% for item in news_list %}
@@ -190,7 +190,7 @@
           <path d="M0 0h24v24H0z" fill="none" />
           <path d="M12 2a10 10 0 0 0-9.95 9h11.64L9.74 7.05a1 1 0 0 1 1.41-1.41l5.66 5.65a1 1 0 0 1 0 1.42l-5.66 5.65a1 1 0 0 1-1.41 0 1 1 0 0 1 0-1.41L13.69 13H2.05A10 10 0 1 0 12 2z" />
         </svg>
-        <span class="nhsuk-action-link__text">Read all news</span>
+        <span class="nhsuk-action-link__text">{% translate 'Read all news' %}</span>
       </a>
     </div>
 
