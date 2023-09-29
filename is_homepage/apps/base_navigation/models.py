@@ -7,6 +7,7 @@ from modelcluster.models import ClusterableModel
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
 from wagtail.models import Orderable, TranslatableMixin
 from wagtail.snippets.models import register_snippet
+from wagtail_localize.fields import SynchronizedField, TranslatableField
 
 
 @register_snippet
@@ -23,6 +24,12 @@ class BaseNavigationSnippet(TranslatableMixin, ClusterableModel):
         InlinePanel('navigation_menu_items', label='Menu Item')
     ]
 
+    # translatable_fields = [TranslatableField('title'), TranslatableField('navigation_menu_items')]
+
+    override_translatable_fields = [
+        SynchronizedField("slug", overridable=False),
+    ]
+
     def __str__(self):
         return self.title
 
@@ -33,7 +40,7 @@ class BaseNavigationSnippet(TranslatableMixin, ClusterableModel):
         unique_together = [('translation_key', 'locale')]
 
 
-class NavigationMenuItem(Orderable):
+class NavigationMenuItem(TranslatableMixin, Orderable):
 
     menu_title = models.CharField(verbose_name='Title', blank=False, null=True, max_length=50)
     menu_description = models.CharField(verbose_name='Description', blank=True, null=True, max_length=500, help_text='Description is only visible within submenus')
@@ -43,6 +50,9 @@ class NavigationMenuItem(Orderable):
     submenu = models.CharField(blank=True, null=True, max_length=50, help_text='Slug of the menu to act as this item submenu')
 
     menu = ParentalKey(BaseNavigationSnippet, related_name='navigation_menu_items', help_text='Menu to which this item belongs')
+    
+    # it was giving a warning about the default value
+    locale = models.ForeignKey(editable=False, on_delete=models.deletion.PROTECT, related_name='+', to='wagtailcore.locale', default=1)
 
     panels = [
         FieldPanel('menu_title'),
@@ -52,6 +62,9 @@ class NavigationMenuItem(Orderable):
         FieldPanel('open_in_new_tab'),
         FieldPanel('submenu')
     ]
+
+    class Meta(TranslatableMixin.Meta):
+        unique_together = [('translation_key', 'locale')]
 
     @property
     def title(self):
